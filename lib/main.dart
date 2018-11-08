@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:github_user_search_flutter/customwidgets/gradient_app_bar.dart';
-import 'package:github_user_search_flutter/utils/platform_adaptive.dart';
 
 void main() => runApp(new MyApp());
 
@@ -11,17 +11,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Flutter Demo',
-      theme: defaultTargetPlatform == TargetPlatform.iOS
-          ? kIOSTheme
-          : kDefaultTheme,
-      home: new MyHomePage(title: 'Flutter Demo'),
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: new MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
@@ -30,19 +29,26 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return new Scaffold(
-      body:  Column(
-          children: <Widget>[
-            new GradientAppBar("Custom Gradient App Bar"),
-            Text(
-              "New gradient toolbar",
-              style: new TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            )
-          ],
-        ),
+      backgroundColor: Colors.white,
+      body: Column(
+        children: <Widget>[
+          new GradientAppBar(title: "Github User Search"),
+          Text(
+            "New gradient toolbar",
+            style: new TextStyle(
+                fontSize: 20.0,
+                color: Colors.black,
+                fontWeight: FontWeight.w400),
+          ),
+        ],
+      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: null,
+        tooltip: 'Increment',
+        child: new Icon(Icons.add),
+      ),
     );
     /*return new Scaffold(
       appBar: AppBar(
