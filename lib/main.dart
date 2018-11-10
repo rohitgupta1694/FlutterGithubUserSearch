@@ -14,13 +14,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: new MyHomePage(),
+      home: new MyHomePage(scaffoldKey: GlobalKey<ScaffoldState>()),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key key, this.scaffoldKey}) : super(key: key);
+
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
@@ -30,11 +32,23 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
+    void _handleSearchButtonClick(bool clickStatus) {
+      //TODO Open Search screen
+      widget.scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text("Clicked on Search Button"),
+      ));
+    }
+
     return new Scaffold(
+      key: widget.scaffoldKey,
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
-          new GradientAppBar(title: "Github User Search"),
+          new GradientAppBar(
+            title: "Github User Search",
+            onClick: _handleSearchButtonClick,
+          ),
           Text(
             "New gradient toolbar",
             style: new TextStyle(
