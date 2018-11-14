@@ -3,13 +3,21 @@ import 'package:flutter/material.dart';
 class GradientAppBar extends StatelessWidget {
   final double barHeight = 50.0;
 
-  GradientAppBar({Key key, this.title, @required this.onClick})
+  GradientAppBar(
+      {Key key, this.title, this.needSearchAction, @required this.onClick})
       : super(key: key);
   final String title;
+  final bool needSearchAction;
   final ValueChanged<bool> onClick;
 
   void _onSearchIconClick() {
     onClick(true);
+  }
+
+  static getTextWidget(@required String title) {
+    return Text(title,
+        style: TextStyle(
+            fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w600));
   }
 
   @override
@@ -25,23 +33,22 @@ class GradientAppBar extends StatelessWidget {
             child: Text(""),
           ),
           Container(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 48.0),
-              child: Text(
-                title,
-                style: new TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
-          ),
-          IconButton(
+              child: needSearchAction
+                  ? Padding(
+                padding: const EdgeInsets.only(left: 48.0),
+                child: getTextWidget(title),
+              )
+                  : getTextWidget(title)),
+          needSearchAction
+              ? IconButton(
             icon: Icon(Icons.search),
             tooltip: 'Search',
             color: Colors.white,
             onPressed: _onSearchIconClick, // null disables the button
           )
+              : Container(
+            child: Text(""),
+          ),
         ],
       ),
       decoration: new BoxDecoration(

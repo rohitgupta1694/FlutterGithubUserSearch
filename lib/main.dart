@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:github_user_search_flutter/customwidgets/gradient_app_bar.dart';
+import 'package:github_user_search_flutter/utils/SnackBarUtil.dart';
 
 void main() => runApp(new MyApp());
 
@@ -35,9 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     void _handleSearchButtonClick(bool clickStatus) {
       //TODO Open Search screen
-      widget.scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text("Clicked on Search Button"),
-      ));
+      widget.scaffoldKey.currentState.showSnackBar(
+          SnackBarUtil.showNormalSnackBar("Search something"));
     }
 
     return new Scaffold(
@@ -47,21 +47,26 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           new GradientAppBar(
             title: "Github User Search",
+            needSearchAction: false,
             onClick: _handleSearchButtonClick,
           ),
-          Text(
-            "New gradient toolbar",
-            style: new TextStyle(
-                fontSize: 20.0,
-                color: Colors.black,
-                fontWeight: FontWeight.w400),
-          ),
+          Expanded(child: Center(
+            child: Text(
+              "New gradient toolbar",
+              style: new TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400),
+            ),
+          )),
         ],
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
+        onPressed: () {
+          _handleSearchButtonClick(true);
+        },
+        tooltip: 'Search',
+        child: new Icon(Icons.search),
       ),
     );
     /*return new Scaffold(
