@@ -6,12 +6,12 @@ import 'package:built_value/serializer.dart';
 
 import 'user_serializers.dart';
 
-part 'user.g.dart';
+part 'users.g.dart';
 
-abstract class User implements Built<User, UserBuilder> {
-  User._();
+abstract class Users implements Built<Users, UsersBuilder> {
+  Users._();
 
-  factory User([updates(UserBuilder b)]) = _$User;
+  factory Users([updates(UsersBuilder b)]) = _$Users;
 
   @BuiltValueField(wireName: 'total_count')
   int get totalCount;
@@ -23,15 +23,15 @@ abstract class User implements Built<User, UserBuilder> {
   BuiltList<Items> get items;
 
   String toJson() {
-    return json.encode(serializers.serializeWith(User.serializer, this));
+    return json.encode(serializers.serializeWith(Users.serializer, this));
   }
 
-  static User fromJson(String jsonString) {
+  static Users fromJson(String jsonString) {
     return serializers.deserializeWith(
-        User.serializer, json.decode(jsonString));
+        Users.serializer, json.decode(jsonString));
   }
 
-  static Serializer<User> get serializer => _$userSerializer;
+  static Serializer<Users> get serializer => _$usersSerializer;
 }
 
 abstract class Items implements Built<Items, ItemsBuilder> {

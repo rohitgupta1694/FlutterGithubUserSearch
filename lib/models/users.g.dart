@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'users.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
@@ -19,19 +19,19 @@ part of 'user.dart';
 // ignore_for_file: unnecessary_new
 // ignore_for_file: test_types_in_equals
 
-Serializer<User> _$userSerializer = new _$UserSerializer();
+Serializer<Users> _$usersSerializer = new _$UsersSerializer();
 Serializer<Items> _$itemsSerializer = new _$ItemsSerializer();
 Serializer<TextMatches> _$textMatchesSerializer = new _$TextMatchesSerializer();
 Serializer<Matches> _$matchesSerializer = new _$MatchesSerializer();
 
-class _$UserSerializer implements StructuredSerializer<User> {
+class _$UsersSerializer implements StructuredSerializer<Users> {
   @override
-  final Iterable<Type> types = const [User, _$User];
+  final Iterable<Type> types = const [Users, _$Users];
   @override
-  final String wireName = 'User';
+  final String wireName = 'Users';
 
   @override
-  Iterable serialize(Serializers serializers, User object,
+  Iterable serialize(Serializers serializers, Users object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'total_count',
@@ -50,9 +50,9 @@ class _$UserSerializer implements StructuredSerializer<User> {
   }
 
   @override
-  User deserialize(Serializers serializers, Iterable serialized,
+  Users deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserBuilder();
+    final result = new UsersBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -373,7 +373,7 @@ class _$MatchesSerializer implements StructuredSerializer<Matches> {
   }
 }
 
-class _$User extends User {
+class _$Users extends Users {
   @override
   final int totalCount;
   @override
@@ -381,32 +381,32 @@ class _$User extends User {
   @override
   final BuiltList<Items> items;
 
-  factory _$User([void updates(UserBuilder b)]) =>
-      (new UserBuilder()..update(updates)).build();
+  factory _$Users([void updates(UsersBuilder b)]) =>
+      (new UsersBuilder()..update(updates)).build();
 
-  _$User._({this.totalCount, this.incompleteResults, this.items}) : super._() {
+  _$Users._({this.totalCount, this.incompleteResults, this.items}) : super._() {
     if (totalCount == null) {
-      throw new BuiltValueNullFieldError('User', 'totalCount');
+      throw new BuiltValueNullFieldError('Users', 'totalCount');
     }
     if (incompleteResults == null) {
-      throw new BuiltValueNullFieldError('User', 'incompleteResults');
+      throw new BuiltValueNullFieldError('Users', 'incompleteResults');
     }
     if (items == null) {
-      throw new BuiltValueNullFieldError('User', 'items');
+      throw new BuiltValueNullFieldError('Users', 'items');
     }
   }
 
   @override
-  User rebuild(void updates(UserBuilder b)) =>
+  Users rebuild(void updates(UsersBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  UserBuilder toBuilder() => new UserBuilder()..replace(this);
+  UsersBuilder toBuilder() => new UsersBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is User &&
+    return other is Users &&
         totalCount == other.totalCount &&
         incompleteResults == other.incompleteResults &&
         items == other.items;
@@ -420,7 +420,7 @@ class _$User extends User {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('User')
+    return (newBuiltValueToStringHelper('Users')
           ..add('totalCount', totalCount)
           ..add('incompleteResults', incompleteResults)
           ..add('items', items))
@@ -428,8 +428,8 @@ class _$User extends User {
   }
 }
 
-class UserBuilder implements Builder<User, UserBuilder> {
-  _$User _$v;
+class UsersBuilder implements Builder<Users, UsersBuilder> {
+  _$Users _$v;
 
   int _totalCount;
 
@@ -450,9 +450,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
 
   set items(ListBuilder<Items> items) => _$this._items = items;
 
-  UserBuilder();
+  UsersBuilder();
 
-  UserBuilder get _$this {
+  UsersBuilder get _$this {
     if (_$v != null) {
       _totalCount = _$v.totalCount;
       _incompleteResults = _$v.incompleteResults;
@@ -463,24 +463,24 @@ class UserBuilder implements Builder<User, UserBuilder> {
   }
 
   @override
-  void replace(User other) {
+  void replace(Users other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$User;
+    _$v = other as _$Users;
   }
 
   @override
-  void update(void updates(UserBuilder b)) {
+  void update(void updates(UsersBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$User build() {
-    _$User _$result;
+  _$Users build() {
+    _$Users _$result;
     try {
       _$result = _$v ??
-          new _$User._(
+          new _$Users._(
               totalCount: totalCount,
               incompleteResults: incompleteResults,
               items: items.build());
@@ -491,7 +491,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
         items.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'User', _$failedField, e.toString());
+            'Users', _$failedField, e.toString());
       }
       rethrow;
     }

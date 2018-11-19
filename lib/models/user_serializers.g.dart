@@ -22,8 +22,7 @@ part of 'user_serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Items.serializer)
       ..add(Matches.serializer)
-      ..add(TextMatches.serializer)
-      ..add(User.serializer)
+      ..add(TextMatches.serializer)..add(Users.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Items)]),
           () => new ListBuilder<Items>())
