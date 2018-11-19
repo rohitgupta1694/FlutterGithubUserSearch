@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:github_user_search_flutter/customwidgets/gradient_app_bar.dart';
-import 'package:github_user_search_flutter/utils/SnackBarUtil.dart';
+import 'package:github_user_search_flutter/utils/snackbar_util.dart';
 
 void main() => runApp(new MyApp());
 
@@ -13,7 +13,9 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Github User Search',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primaryColor: const Color(0xffee3c48),
+        splashColor: Colors.white24,
+        splashFactory: InkRipple.splashFactory,
       ),
       home: new MyHomePage(scaffoldKey: GlobalKey<ScaffoldState>()),
     );
@@ -36,8 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     void _handleSearchButtonClick(bool clickStatus) {
       //TODO Open Search screen
-      widget.scaffoldKey.currentState.showSnackBar(
-          SnackBarUtil.showNormalSnackBar("Search something"));
+      widget.scaffoldKey.currentState
+          .showSnackBar(SnackBarUtil.showNormalSnackBar("Search something"));
     }
 
     return new Scaffold(
@@ -50,13 +52,33 @@ class _MyHomePageState extends State<MyHomePage> {
             needSearchAction: false,
             onClick: _handleSearchButtonClick,
           ),
-          Expanded(child: Center(
-            child: Text(
-              "New gradient toolbar",
-              style: new TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400),
+          Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const <Widget>[
+                            Text('Press the '),
+                            Tooltip(
+                              message: 'search',
+                              child: Icon(
+                                Icons.search,
+                                size: 18.0,
+                              ),
+                            ),
+                            Text(' icon in the bottom right corner'),
+                          ],
+                        ),
+                        const Text(
+                            'and search for an integer between 0 and 100,000.'),
+                      ],
+                    ),
+                  ],
             ),
           )),
         ],
@@ -67,38 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         tooltip: 'Search',
         child: new Icon(Icons.search),
+        backgroundColor: const Color(0xffee3c48),
       ),
     );
-    /*return new Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF232526),
-        title: Text(widget.title),
-        centerTitle: true,
-        elevation: 0.0,
-        actions: [
-          Builder(
-            builder: (context) => IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () async {
-              },
-            ),
-          ),
-        ],
-      ),
-      body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
-            ),
-            new Text(
-              '0',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-    );*/
   }
 }
