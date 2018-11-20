@@ -3,15 +3,14 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:github_user_search_flutter/api/response_models/response_serializers.dart';
 
-import 'user_serializers.dart';
+part 'response.g.dart';
 
-part 'users.g.dart';
+abstract class Response implements Built<Response, ResponseBuilder> {
+  Response._();
 
-abstract class Users implements Built<Users, UsersBuilder> {
-  Users._();
-
-  factory Users([updates(UsersBuilder b)]) = _$Users;
+  factory Response([updates(ResponseBuilder b)]) = _$Response;
 
   @BuiltValueField(wireName: 'total_count')
   int get totalCount;
@@ -23,15 +22,15 @@ abstract class Users implements Built<Users, UsersBuilder> {
   BuiltList<Items> get items;
 
   String toJson() {
-    return json.encode(serializers.serializeWith(Users.serializer, this));
+    return json.encode(serializers.serializeWith(Response.serializer, this));
   }
 
-  static Users fromJson(String jsonString) {
+  static Response fromJson(String jsonString) {
     return serializers.deserializeWith(
-        Users.serializer, json.decode(jsonString));
+        Response.serializer, json.decode(jsonString));
   }
 
-  static Serializer<Users> get serializer => _$usersSerializer;
+  static Serializer<Response> get serializer => _$responseSerializer;
 }
 
 abstract class Items implements Built<Items, ItemsBuilder> {

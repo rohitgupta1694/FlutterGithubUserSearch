@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'users.dart';
+part of 'response.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
@@ -19,19 +19,19 @@ part of 'users.dart';
 // ignore_for_file: unnecessary_new
 // ignore_for_file: test_types_in_equals
 
-Serializer<Users> _$usersSerializer = new _$UsersSerializer();
+Serializer<Response> _$responseSerializer = new _$ResponseSerializer();
 Serializer<Items> _$itemsSerializer = new _$ItemsSerializer();
 Serializer<TextMatches> _$textMatchesSerializer = new _$TextMatchesSerializer();
 Serializer<Matches> _$matchesSerializer = new _$MatchesSerializer();
 
-class _$UsersSerializer implements StructuredSerializer<Users> {
+class _$ResponseSerializer implements StructuredSerializer<Response> {
   @override
-  final Iterable<Type> types = const [Users, _$Users];
+  final Iterable<Type> types = const [Response, _$Response];
   @override
-  final String wireName = 'Users';
+  final String wireName = 'Response';
 
   @override
-  Iterable serialize(Serializers serializers, Users object,
+  Iterable serialize(Serializers serializers, Response object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'total_count',
@@ -50,9 +50,9 @@ class _$UsersSerializer implements StructuredSerializer<Users> {
   }
 
   @override
-  Users deserialize(Serializers serializers, Iterable serialized,
+  Response deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UsersBuilder();
+    final result = new ResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -373,7 +373,7 @@ class _$MatchesSerializer implements StructuredSerializer<Matches> {
   }
 }
 
-class _$Users extends Users {
+class _$Response extends Response {
   @override
   final int totalCount;
   @override
@@ -381,32 +381,36 @@ class _$Users extends Users {
   @override
   final BuiltList<Items> items;
 
-  factory _$Users([void updates(UsersBuilder b)]) =>
-      (new UsersBuilder()..update(updates)).build();
+  factory _$Response([void updates(ResponseBuilder b)]) =>
+      (new ResponseBuilder()
+        ..update(updates)).build();
 
-  _$Users._({this.totalCount, this.incompleteResults, this.items}) : super._() {
+  _$Response._({this.totalCount, this.incompleteResults, this.items})
+      : super._() {
     if (totalCount == null) {
-      throw new BuiltValueNullFieldError('Users', 'totalCount');
+      throw new BuiltValueNullFieldError('Response', 'totalCount');
     }
     if (incompleteResults == null) {
-      throw new BuiltValueNullFieldError('Users', 'incompleteResults');
+      throw new BuiltValueNullFieldError('Response', 'incompleteResults');
     }
     if (items == null) {
-      throw new BuiltValueNullFieldError('Users', 'items');
+      throw new BuiltValueNullFieldError('Response', 'items');
     }
   }
 
   @override
-  Users rebuild(void updates(UsersBuilder b)) =>
+  Response rebuild(void updates(ResponseBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  UsersBuilder toBuilder() => new UsersBuilder()..replace(this);
+  ResponseBuilder toBuilder() =>
+      new ResponseBuilder()
+        ..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Users &&
+    return other is Response &&
         totalCount == other.totalCount &&
         incompleteResults == other.incompleteResults &&
         items == other.items;
@@ -420,7 +424,7 @@ class _$Users extends Users {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Users')
+    return (newBuiltValueToStringHelper('Response')
           ..add('totalCount', totalCount)
           ..add('incompleteResults', incompleteResults)
           ..add('items', items))
@@ -428,31 +432,25 @@ class _$Users extends Users {
   }
 }
 
-class UsersBuilder implements Builder<Users, UsersBuilder> {
-  _$Users _$v;
+class ResponseBuilder implements Builder<Response, ResponseBuilder> {
+  _$Response _$v;
 
   int _totalCount;
-
   int get totalCount => _$this._totalCount;
-
   set totalCount(int totalCount) => _$this._totalCount = totalCount;
 
   bool _incompleteResults;
-
   bool get incompleteResults => _$this._incompleteResults;
-
   set incompleteResults(bool incompleteResults) =>
       _$this._incompleteResults = incompleteResults;
 
   ListBuilder<Items> _items;
-
   ListBuilder<Items> get items => _$this._items ??= new ListBuilder<Items>();
-
   set items(ListBuilder<Items> items) => _$this._items = items;
 
-  UsersBuilder();
+  ResponseBuilder();
 
-  UsersBuilder get _$this {
+  ResponseBuilder get _$this {
     if (_$v != null) {
       _totalCount = _$v.totalCount;
       _incompleteResults = _$v.incompleteResults;
@@ -463,24 +461,24 @@ class UsersBuilder implements Builder<Users, UsersBuilder> {
   }
 
   @override
-  void replace(Users other) {
+  void replace(Response other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$Users;
+    _$v = other as _$Response;
   }
 
   @override
-  void update(void updates(UsersBuilder b)) {
+  void update(void updates(ResponseBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Users build() {
-    _$Users _$result;
+  _$Response build() {
+    _$Response _$result;
     try {
       _$result = _$v ??
-          new _$Users._(
+          new _$Response._(
               totalCount: totalCount,
               incompleteResults: incompleteResults,
               items: items.build());
@@ -491,7 +489,7 @@ class UsersBuilder implements Builder<Users, UsersBuilder> {
         items.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'Users', _$failedField, e.toString());
+            'Response', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -735,127 +733,87 @@ class ItemsBuilder implements Builder<Items, ItemsBuilder> {
   _$Items _$v;
 
   String _login;
-
   String get login => _$this._login;
-
   set login(String login) => _$this._login = login;
 
   int _id;
-
   int get id => _$this._id;
-
   set id(int id) => _$this._id = id;
 
   String _nodeId;
-
   String get nodeId => _$this._nodeId;
-
   set nodeId(String nodeId) => _$this._nodeId = nodeId;
 
   String _avatarUrl;
-
   String get avatarUrl => _$this._avatarUrl;
-
   set avatarUrl(String avatarUrl) => _$this._avatarUrl = avatarUrl;
 
   String _gravatarId;
-
   String get gravatarId => _$this._gravatarId;
-
   set gravatarId(String gravatarId) => _$this._gravatarId = gravatarId;
 
   String _url;
-
   String get url => _$this._url;
-
   set url(String url) => _$this._url = url;
 
   String _htmlUrl;
-
   String get htmlUrl => _$this._htmlUrl;
-
   set htmlUrl(String htmlUrl) => _$this._htmlUrl = htmlUrl;
 
   String _followersUrl;
-
   String get followersUrl => _$this._followersUrl;
-
   set followersUrl(String followersUrl) => _$this._followersUrl = followersUrl;
 
   String _followingUrl;
-
   String get followingUrl => _$this._followingUrl;
-
   set followingUrl(String followingUrl) => _$this._followingUrl = followingUrl;
 
   String _gistsUrl;
-
   String get gistsUrl => _$this._gistsUrl;
-
   set gistsUrl(String gistsUrl) => _$this._gistsUrl = gistsUrl;
 
   String _starredUrl;
-
   String get starredUrl => _$this._starredUrl;
-
   set starredUrl(String starredUrl) => _$this._starredUrl = starredUrl;
 
   String _subscriptionsUrl;
-
   String get subscriptionsUrl => _$this._subscriptionsUrl;
-
   set subscriptionsUrl(String subscriptionsUrl) =>
       _$this._subscriptionsUrl = subscriptionsUrl;
 
   String _organizationsUrl;
-
   String get organizationsUrl => _$this._organizationsUrl;
-
   set organizationsUrl(String organizationsUrl) =>
       _$this._organizationsUrl = organizationsUrl;
 
   String _reposUrl;
-
   String get reposUrl => _$this._reposUrl;
-
   set reposUrl(String reposUrl) => _$this._reposUrl = reposUrl;
 
   String _eventsUrl;
-
   String get eventsUrl => _$this._eventsUrl;
-
   set eventsUrl(String eventsUrl) => _$this._eventsUrl = eventsUrl;
 
   String _receivedEventsUrl;
-
   String get receivedEventsUrl => _$this._receivedEventsUrl;
-
   set receivedEventsUrl(String receivedEventsUrl) =>
       _$this._receivedEventsUrl = receivedEventsUrl;
 
   String _type;
-
   String get type => _$this._type;
-
   set type(String type) => _$this._type = type;
 
   bool _siteAdmin;
-
   bool get siteAdmin => _$this._siteAdmin;
-
   set siteAdmin(bool siteAdmin) => _$this._siteAdmin = siteAdmin;
 
   double _score;
-
   double get score => _$this._score;
-
   set score(double score) => _$this._score = score;
 
   ListBuilder<TextMatches> _textMatches;
-
   ListBuilder<TextMatches> get textMatches =>
       _$this._textMatches ??= new ListBuilder<TextMatches>();
-
   set textMatches(ListBuilder<TextMatches> textMatches) =>
       _$this._textMatches = textMatches;
 
@@ -1026,34 +984,24 @@ class TextMatchesBuilder implements Builder<TextMatches, TextMatchesBuilder> {
   _$TextMatches _$v;
 
   String _objectUrl;
-
   String get objectUrl => _$this._objectUrl;
-
   set objectUrl(String objectUrl) => _$this._objectUrl = objectUrl;
 
   String _objectType;
-
   String get objectType => _$this._objectType;
-
   set objectType(String objectType) => _$this._objectType = objectType;
 
   String _property;
-
   String get property => _$this._property;
-
   set property(String property) => _$this._property = property;
 
   String _fragment;
-
   String get fragment => _$this._fragment;
-
   set fragment(String fragment) => _$this._fragment = fragment;
 
   ListBuilder<Matches> _matches;
-
   ListBuilder<Matches> get matches =>
       _$this._matches ??= new ListBuilder<Matches>();
-
   set matches(ListBuilder<Matches> matches) => _$this._matches = matches;
 
   TextMatchesBuilder();
@@ -1159,15 +1107,11 @@ class MatchesBuilder implements Builder<Matches, MatchesBuilder> {
   _$Matches _$v;
 
   String _text;
-
   String get text => _$this._text;
-
   set text(String text) => _$this._text = text;
 
   ListBuilder<int> _indices;
-
   ListBuilder<int> get indices => _$this._indices ??= new ListBuilder<int>();
-
   set indices(ListBuilder<int> indices) => _$this._indices = indices;
 
   MatchesBuilder();

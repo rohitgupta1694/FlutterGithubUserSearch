@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_serializers.dart';
+part of 'response_serializers.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
@@ -21,8 +21,8 @@ part of 'user_serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Items.serializer)
-      ..add(Matches.serializer)
-      ..add(TextMatches.serializer)..add(Users.serializer)
+      ..add(Matches.serializer)..add(Response.serializer)..add(
+          TextMatches.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Items)]),
           () => new ListBuilder<Items>())
