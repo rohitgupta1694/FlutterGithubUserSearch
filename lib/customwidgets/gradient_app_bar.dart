@@ -1,13 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class GradientAppBar extends StatelessWidget {
   final double barHeight = 50.0;
 
-  GradientAppBar(
-      {Key key, this.title, this.needSearchAction, @required this.onClick})
+  GradientAppBar({Key key,
+    this.title,
+    this.needBackButton,
+    this.needSearchAction,
+    @required this.onClick})
       : super(key: key);
+
   final String title;
-  final bool needSearchAction;
+  final bool needBackButton, needSearchAction;
   final ValueChanged<bool> onClick;
 
   void _onSearchIconClick() {
@@ -20,6 +25,50 @@ class GradientAppBar extends StatelessWidget {
             fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w600));
   }
 
+  static getBackButton(BuildContext context) {
+    return IconButton(
+      icon: Icon(defaultTargetPlatform != TargetPlatform.iOS
+          ? Icons.arrow_back
+          : Icons.arrow_back_ios),
+      tooltip: 'Back',
+      color: Colors.white,
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  Widget getLeadingAppBarWidget(BuildContext context) {
+    return needBackButton ? getBackButton(context) : Container(child: Text(""));
+  }
+
+  Widget getCustomAppBarTextWidget() {
+    if (!needBackButton && needSearchAction) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 48.0),
+        child: getTextWidget(title),
+      );
+    } else if (needBackButton && !needSearchAction) {
+      return Padding(
+        padding: const EdgeInsets.only(right: 48.0),
+        child: getTextWidget(title),
+      );
+    } else {
+      return getTextWidget(title);
+    }
+  }
+
+  Widget getCustomAppBarTrailingWidget() {
+    return needSearchAction
+        ? IconButton(
+      icon: Icon(Icons.search),
+      tooltip: 'Search',
+      color: Colors.white,
+      onPressed: _onSearchIconClick, // null disables the button
+    )
+        : Container(child: Text(""));
+  }
+
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -29,26 +78,9 @@ class GradientAppBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Container(
-            child: Text(""),
-          ),
-          Container(
-              child: needSearchAction
-                  ? Padding(
-                padding: const EdgeInsets.only(left: 48.0),
-                child: getTextWidget(title),
-              )
-                  : getTextWidget(title)),
-          needSearchAction
-              ? IconButton(
-            icon: Icon(Icons.search),
-            tooltip: 'Search',
-            color: Colors.white,
-            onPressed: _onSearchIconClick, // null disables the button
-          )
-              : Container(
-            child: Text(""),
-          ),
+          getLeadingAppBarWidget(context),
+          getCustomAppBarTextWidget(),
+          getCustomAppBarTrailingWidget(),
         ],
       ),
       decoration: new BoxDecoration(
@@ -62,20 +94,3 @@ class GradientAppBar extends StatelessWidget {
     );
   }
 }
-
-/*
-
-child: Row(
-mainAxisAlignment: MainAxisAlignment.end,
-children: <Widget>[
-Padding(
-padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 64.0),
-child: Text(
-widget.title,
-style: new TextStyle(fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.bold),
-),
-),
-
-
-],
-)*/
