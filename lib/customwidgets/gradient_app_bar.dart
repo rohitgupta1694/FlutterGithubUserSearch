@@ -8,7 +8,7 @@ class GradientAppBar extends StatelessWidget {
     this.title,
     this.needBackButton,
     this.needSearchAction,
-    @required this.onClick})
+    this.onClick})
       : super(key: key);
 
   final String title;
