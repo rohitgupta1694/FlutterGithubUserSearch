@@ -19,28 +19,27 @@ class GradientAppBar extends StatelessWidget {
     onClick(true);
   }
 
-  static getTextWidget(@required String title) {
-    return Text(title,
-        style: TextStyle(
-            fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w600));
-  }
+  getTextWidget(String title) =>
+      Text(title,
+          style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+              fontWeight: FontWeight.w600));
 
-  static getBackButton(BuildContext context) {
-    return IconButton(
-      icon: Icon(defaultTargetPlatform != TargetPlatform.iOS
-          ? Icons.arrow_back
-          : Icons.arrow_back_ios),
-      tooltip: 'Back',
-      color: Colors.white,
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
+  getBackButton(BuildContext context) =>
+      IconButton(
+        icon: Icon(defaultTargetPlatform != TargetPlatform.iOS
+            ? Icons.arrow_back
+            : Icons.arrow_back_ios),
+        tooltip: 'Back',
+        color: Colors.white,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      );
 
-  Widget getLeadingAppBarWidget(BuildContext context) {
-    return needBackButton ? getBackButton(context) : Container(child: Text(""));
-  }
+  getLeadingAppBarWidget(BuildContext context) =>
+      needBackButton ? getBackButton(context) : Container(child: Text(""));
 
   Widget getCustomAppBarTextWidget() {
     if (!needBackButton && needSearchAction) {
@@ -58,16 +57,15 @@ class GradientAppBar extends StatelessWidget {
     }
   }
 
-  Widget getCustomAppBarTrailingWidget() {
-    return needSearchAction
-        ? IconButton(
-      icon: Icon(Icons.search),
-      tooltip: 'Search',
-      color: Colors.white,
-      onPressed: _onSearchIconClick, // null disables the button
-    )
-        : Container(child: Text(""));
-  }
+  getCustomAppBarTrailingWidget() =>
+      needSearchAction
+          ? IconButton(
+        icon: Icon(Icons.search),
+        tooltip: 'Search',
+        color: Colors.white,
+        onPressed: _onSearchIconClick, // null disables the button
+      )
+          : Container(child: Text(""));
 
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,7 @@ class UserSearchRepo {
 
   Future<List<User>> getUsers(String query) async {
     final response =
-        await http.get(Uri.parse('${baseUrl}?q=$query&per_page=20'));
+    await http.get(Uri.parse('$baseUrl?q=$query&per_page=20'));
     if (response.statusCode == 200) {
       return serializers
           .deserializeWith(Response.serializer, json.decode(response.body))
