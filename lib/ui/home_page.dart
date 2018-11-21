@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:github_user_search_flutter/customwidgets/gradient_app_bar.dart';
+import 'package:github_user_search_flutter/custom_widgets/gradient_app_bar.dart';
 import 'package:github_user_search_flutter/ui/search_screen.dart';
 
 class MyHomePage extends StatefulWidget {
