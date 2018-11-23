@@ -82,6 +82,14 @@ class GradientAppBar extends StatelessWidget {
         ],
       ),
       decoration: new BoxDecoration(
+        boxShadow: [
+          new BoxShadow(
+            spreadRadius: 5.0,
+            color: Colors.grey,
+            offset: new Offset(0.0, 1.0),
+            blurRadius: 8.0,
+          )
+        ],
         gradient: new LinearGradient(
             colors: [Color(0xFF414345), Color(0xFF232526)],
             begin: const FractionalOffset(0.0, 0.0),
