@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 class GradientAppBar extends StatelessWidget {
   final double barHeight = 50.0;
 
-  GradientAppBar({Key key,
-    this.title,
-    this.needBackButton,
-    this.needSearchAction,
-    this.onClick})
+  GradientAppBar(
+      {Key key,
+      this.title,
+      this.needBackButton,
+      this.needSearchAction,
+      this.onClick})
       : super(key: key);
 
   final String title;
@@ -19,15 +20,11 @@ class GradientAppBar extends StatelessWidget {
     onClick(true);
   }
 
-  getTextWidget(String title) =>
-      Text(title,
-          style: TextStyle(
-              fontSize: 20.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w600));
+  getTextWidget(String title) => Text(title,
+      style: TextStyle(
+          fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w600));
 
-  getBackButton(BuildContext context) =>
-      IconButton(
+  getBackButton(BuildContext context) => IconButton(
         icon: Icon(defaultTargetPlatform != TargetPlatform.iOS
             ? Icons.arrow_back
             : Icons.arrow_back_ios),
@@ -57,15 +54,14 @@ class GradientAppBar extends StatelessWidget {
     }
   }
 
-  getCustomAppBarTrailingWidget() =>
-      needSearchAction
-          ? IconButton(
-        icon: Icon(Icons.search),
-        tooltip: 'Search',
-        color: Colors.white,
-        onPressed: _onSearchIconClick, // null disables the button
-      )
-          : Container(child: Text(""));
+  getCustomAppBarTrailingWidget() => needSearchAction
+      ? IconButton(
+          icon: Icon(Icons.search),
+          tooltip: 'Search',
+          color: Colors.white,
+          onPressed: _onSearchIconClick, // null disables the button
+        )
+      : Container(child: Text(""));
 
   @override
   Widget build(BuildContext context) {
