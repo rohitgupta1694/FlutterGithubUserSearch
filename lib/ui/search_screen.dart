@@ -1,29 +1,28 @@
-import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:github_user_search_flutter/bloc/search_bloc.dart';
 import 'package:github_user_search_flutter/custom_widgets/gradient_app_bar.dart';
+import 'package:github_user_search_flutter/models/user.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({Key key, this.scaffoldKey}) : super(key: key);
+  SearchScreen({Key key, this.searchBLoC}) : super(key: key);
 
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  final SearchBLoC searchBLoC;
 
   @override
   _SearchScreenState createState() => new _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  int _searchState = 0;
   TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-
     return new Scaffold(
-      key: widget.scaffoldKey,
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
@@ -36,33 +35,8 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Column(
                 children: <Widget>[
                   getUserInputSearchWidget(),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Container(
-                        constraints: BoxConstraints.expand(
-                            width: double.maxFinite),
-                        decoration: BoxDecoration(
-                          border: BorderDirectional(
-                            top: BorderSide(
-                              width: 0.5,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            getResultHeadingWidget(),
-                            Expanded(
-                              child: getUsersResultWidget(),
-                            ),
-//                        geUsersResultParentWidget(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
+                  getDividerWidget(),
+                  getRemainingAreaWidget(),
                 ],
               ))
         ],
@@ -76,15 +50,22 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Flexible(
-              child: TextField(
-                maxLines: 1,
-                controller: _textController,
-                onSubmitted: _handleSubmitted,
-                decoration: InputDecoration(
-                    labelText: 'Send a message', border: OutlineInputBorder()),
-              ),
-            ),
+            StreamBuilder(
+                stream: widget.searchBLoC.searchText,
+                initialData: "",
+                builder: (context, snapshot) =>
+                    Flexible(
+                      child: TextField(
+                        maxLines: 1,
+                        controller: _textController,
+                        onSubmitted: _handleSubmitted,
+                        decoration: InputDecoration(
+                          labelText: 'Send a message',
+                          border: OutlineInputBorder(),
+                          errorText: snapshot.error,
+                        ),
+                      ),
+                    )),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: RaisedButton(
@@ -95,6 +76,33 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             )
           ],
+        ),
+      );
+
+  getDividerWidget() =>
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Divider(height: 0.5, color: Colors.grey[400]),
+      );
+
+  getRemainingAreaWidget() =>
+      Expanded(
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                getResultHeadingWidget(),
+                StreamBuilder(
+                  stream: widget.searchBLoC.searchState,
+                  initialData: widget.searchBLoC.searchState.value,
+                  builder: (context, snapshot) =>
+                      Expanded(child: getUsersResultWidget(snapshot.data)),
+                ),
+              ],
+            ),
+          ),
         ),
       );
 
@@ -110,8 +118,8 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       );
 
-  getUsersResultWidget() {
-    switch (_searchState) {
+  getUsersResultWidget(int searchState) {
+    switch (searchState) {
       case 0:
         return Center(child: Text("Search not happening"));
       case 1:
@@ -120,32 +128,31 @@ class _SearchScreenState extends State<SearchScreen> {
             width: 32.0,
             height: 32.0,
             child: CircularProgressIndicator(
-              semanticsLabel: "Loading...",
-              backgroundColor: Theme
-                  .of(context)
-                  .primaryColor,
+              backgroundColor: const Color(0xffee3c48),
             ),
           ),
         );
       case 2:
-        return Center(child: Text("Search complete"));
+        return StreamBuilder<UnmodifiableListView<User>>(
+          stream: widget.searchBLoC.usersList,
+          builder: (context, snapshot) =>
+          snapshot.hasData
+              ? Center(
+              child: Text(
+                  "Search complete, List count: ${snapshot.data.length}"))
+              : Center(
+              child: Text(
+                  "Search inComplete due to some error, Error: ${snapshot
+                      .error}")),
+        );
     }
   }
 
-  void _handleSubmitted(String text) {
-    if (text.length > 0) {
-      setState(() {
-        _searchState = 1;
-      });
-
-      Timer(Duration(milliseconds: 3300), () {
-        setState(() {
-          _searchState = 2;
-        });
-      });
+  void _handleSubmitted(String query) {
+    widget.searchBLoC.searchAction.add(query);
+    if (query.length > 0) {
+      _textController.clear();
     }
-    _textController.clear();
     FocusScope.of(context).requestFocus(new FocusNode());
   }
-
 }

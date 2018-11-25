@@ -8,10 +8,14 @@ class User {
 
   User({this.imageUrl, this.userName, this.fullName, this.profileLink});
 
-  User.fromResponse(Items items)
-      : imageUrl = items.avatarUrl,
-        userName = items.login,
-        fullName = items.textMatches.forEach((textMatch) =>
-            textMatch.property == "name" ? textMatch.fragment : items.login),
-        profileLink = items.htmlUrl;
+  User.fromResponse(Items items) {
+    fullName = userName = items.login;
+    imageUrl = items.avatarUrl;
+    items.textMatches.forEach((textMatch) {
+      if (textMatch.property.contains('name')) {
+        fullName = textMatch.fragment;
+      }
+    });
+    profileLink = items.htmlUrl;
+  }
 }

@@ -6,22 +6,35 @@ import 'package:github_user_search_flutter/models/user.dart';
 import 'package:http/http.dart' as http;
 
 class UserSearchRepo {
-  static const String baseUrl = 'https://api.github.com/search/users';
+  Map<String, String> _githubTextMatchHeader = {
+    'Accept': 'application/vnd.github.v3.text-match+json'
+  };
+
+  static const String _baseUrl = 'https://api.github.com/search/users';
 
   final http.Client client;
 
   UserSearchRepo({this.client});
 
   Future<List<User>> getUsers(String query) async {
+    String finalUrl = '$_baseUrl?q=$query&per_page=20';
+
     final response =
-    await http.get(Uri.parse('$baseUrl?q=$query&per_page=20'));
-    if (response.statusCode == 200) {
-      return serializers
-          .deserializeWith(Response.serializer, json.decode(response.body))
-          .items
-          .map((item) => User.fromResponse(item))
-          .toList();
+    await client.get(Uri.parse(finalUrl), headers: _githubTextMatchHeader);
+    if (response.statusCode != 200) {
+      throw UserSearchAPIError("Users could not be fetched.");
     }
-    return [];
+
+    return serializers
+        .deserializeWith(Response.serializer, json.decode(response.body))
+        .items
+        .map((item) => User.fromResponse(item))
+        .toList();
   }
+}
+
+class UserSearchAPIError extends Error {
+  final String message;
+
+  UserSearchAPIError(this.message);
 }

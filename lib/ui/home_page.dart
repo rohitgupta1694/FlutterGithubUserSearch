@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:github_user_search_flutter/custom_widgets/gradient_app_bar.dart';
 import 'package:github_user_search_flutter/ui/search_screen.dart';
+import 'package:github_user_search_flutter/utils/search_bloc_provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.scaffoldKey}) : super(key: key);
@@ -23,7 +24,9 @@ class _MyHomePageState extends State<MyHomePage> {
 //      widget.scaffoldKey.currentState
 //          .showSnackBar(SnackBarUtil.showNormalSnackBar("Search something"));
       Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return SearchScreen();
+        return SearchScreen(
+          searchBLoC: SearchBLoCProvider.of(context),
+        );
       }));
     }
 
