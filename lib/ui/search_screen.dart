@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:github_user_search_flutter/bloc/search_bloc.dart';
 import 'package:github_user_search_flutter/custom_widgets/gradient_app_bar.dart';
 import 'package:github_user_search_flutter/models/user.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchScreen extends StatefulWidget {
   SearchScreen({Key key, this.searchBLoC}) : super(key: key);
@@ -92,27 +93,24 @@ class _SearchScreenState extends State<SearchScreen> {
   getRemainingAreaWidget() =>
       Expanded(
         child: Container(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                getResultHeadingWidget(),
-                StreamBuilder(
-                  stream: widget.searchBLoC.searchState,
-                  initialData: widget.searchBLoC.searchState.value,
-                  builder: (context, snapshot) =>
-                      Expanded(child: getUsersResultWidget(snapshot.data)),
-                ),
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              getResultHeadingWidget(),
+              StreamBuilder(
+                stream: widget.searchBLoC.searchState,
+                initialData: widget.searchBLoC.searchState.value,
+                builder: (context, snapshot) =>
+                    Expanded(child: getUsersResultWidget(snapshot.data)),
+              ),
+            ],
           ),
         ),
       );
 
   getResultHeadingWidget() =>
       Padding(
-        padding: const EdgeInsets.only(top: 16.0),
+        padding: const EdgeInsets.only(top: 16.0, left: 16.0),
         child: Text(
           "Users",
           style: TextStyle(
@@ -147,19 +145,12 @@ class _SearchScreenState extends State<SearchScreen> {
         return StreamBuilder<UnmodifiableListView<User>>(
           stream: widget.searchBLoC.usersList,
           builder: (context, snapshot) =>
-              Center(
-                child: Text(
-                  snapshot.hasData
-                      ? "Search complete, List count: ${snapshot.data.length}"
-                      : "Search inComplete due to some error, Error: ${snapshot
-                      .error}",
-                  style: TextStyle(
-                    color: const Color(0xff333333),
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+          snapshot.hasData
+              ? ListView(
+            children:
+            snapshot.data.map((user) => UserItem(user)).toList(),
+          )
+              : Center(child: Text("")),
         );
       case 3:
         return StreamBuilder(
@@ -185,5 +176,33 @@ class _SearchScreenState extends State<SearchScreen> {
       _textController.clear();
     }
     FocusScope.of(context).requestFocus(new FocusNode());
+  }
+}
+
+class UserItem extends StatelessWidget {
+  final User user;
+
+  UserItem(this.user);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(user.fullName),
+      subtitle: Text(user.userName),
+      leading: CircleAvatar(
+        backgroundImage:
+        user.imageUrl != null ? NetworkImage(user.imageUrl) : null,
+      ),
+      trailing: IconButton(
+        onPressed: () => _navigateToUserProfile(user.profileLink),
+        icon: Icon(Icons.open_in_browser),
+      ),
+    );
+  }
+
+  void _navigateToUserProfile(String profileUrl) async {
+    if (await canLaunch(profileUrl)) {
+      launch(profileUrl);
+    }
   }
 }
