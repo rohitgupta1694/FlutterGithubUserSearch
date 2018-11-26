@@ -34,27 +34,25 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           Expanded(
               child: Column(
-                children: <Widget>[
-                  getUserInputSearchWidget(),
-                  getDividerWidget(),
-                  getRemainingAreaWidget(),
-                ],
-              ))
+            children: <Widget>[
+              getUserInputSearchWidget(),
+              getDividerWidget(),
+              getRemainingAreaWidget(),
+            ],
+          ))
         ],
       ),
     );
   }
 
-  getUserInputSearchWidget() =>
-      Container(
+  getUserInputSearchWidget() => Container(
         margin: const EdgeInsets.all(16.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             StreamBuilder(
                 stream: widget.searchBLoC.searchText,
-                builder: (context, snapshot) =>
-                    Flexible(
+                builder: (context, snapshot) => Flexible(
                       child: TextField(
                         maxLines: 1,
                         controller: _textController,
@@ -84,14 +82,12 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       );
 
-  getDividerWidget() =>
-      Padding(
+  getDividerWidget() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Divider(height: 0.5, color: Colors.grey[400]),
       );
 
-  getRemainingAreaWidget() =>
-      Expanded(
+  getRemainingAreaWidget() => Expanded(
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,8 +104,7 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       );
 
-  getResultHeadingWidget() =>
-      Padding(
+  getResultHeadingWidget() => Padding(
         padding: const EdgeInsets.only(top: 16.0, left: 16.0),
         child: Text(
           "Users",
@@ -144,19 +139,17 @@ class _SearchScreenState extends State<SearchScreen> {
       case 2:
         return StreamBuilder<UnmodifiableListView<User>>(
           stream: widget.searchBLoC.usersList,
-          builder: (context, snapshot) =>
-          snapshot.hasData
+          builder: (context, snapshot) => snapshot.hasData
               ? ListView(
-            children:
-            snapshot.data.map((user) => UserItem(user)).toList(),
-          )
+                  children:
+                      snapshot.data.map((user) => UserItem(user)).toList(),
+                )
               : Center(child: Text("")),
         );
       case 3:
         return StreamBuilder(
           stream: widget.searchBLoC.errorResponse,
-          builder: (context, snapshot) =>
-              Center(
+          builder: (context, snapshot) => Center(
                 child: Text(
                   snapshot.hasData ? snapshot.data.getMessage() : "",
                   style: TextStyle(
@@ -191,7 +184,7 @@ class UserItem extends StatelessWidget {
       subtitle: Text(user.userName),
       leading: CircleAvatar(
         backgroundImage:
-        user.imageUrl != null ? NetworkImage(user.imageUrl) : null,
+            user.imageUrl != null ? NetworkImage(user.imageUrl) : null,
       ),
       trailing: IconButton(
         onPressed: () => _navigateToUserProfile(user.profileLink),

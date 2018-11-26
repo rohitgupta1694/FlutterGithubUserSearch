@@ -28,7 +28,7 @@ class UserSearchRepo {
     try {
       await client
           .get(Uri.parse('$_baseUrl?q=$query&per_page=20'),
-          headers: _githubTextMatchHeader)
+              headers: _githubTextMatchHeader)
           .then((response) {
         if (response.statusCode == HttpStatus.ok) {
           onSuccess(serializers
