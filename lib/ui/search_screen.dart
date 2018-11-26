@@ -181,6 +181,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void _handleSubmitted(String query) {
     widget.searchBLoC.searchAction.add(query);
+    if (query.length > 0) {
+      _textController.clear();
+    }
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
