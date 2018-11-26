@@ -32,8 +32,8 @@ class SearchBLoC {
   SearchBLoC() {
     _searchActionController.stream.listen((searchString) {
       if (searchString.length > 0) {
+        _searchQuerySubject.add("done");
         _getUsersListAndUpdate(searchString);
-        _searchQuerySubject.addError("");
       } else {
         _searchQuerySubject.addError("Please enter username first");
       }

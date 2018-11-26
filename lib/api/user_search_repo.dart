@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:github_user_search_flutter/api/response_models/response.dart';
 import 'package:github_user_search_flutter/api/response_models/response_serializers.dart';
@@ -7,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 class UserSearchRepo {
   Map<String, String> _githubTextMatchHeader = {
-    'Accept': 'application/vnd.github.v3.text-match+json'
+    HttpHeaders.acceptHeader: 'application/vnd.github.v3.text-match+json'
   };
 
   static const String _baseUrl = 'https://api.github.com/search/users';
@@ -21,7 +22,7 @@ class UserSearchRepo {
 
     final response =
     await client.get(Uri.parse(finalUrl), headers: _githubTextMatchHeader);
-    if (response.statusCode != 200) {
+    if (response.statusCode != HttpStatus.ok) {
       throw UserSearchAPIError("Users could not be fetched.");
     }
 

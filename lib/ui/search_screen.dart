@@ -52,7 +52,6 @@ class _SearchScreenState extends State<SearchScreen> {
           children: <Widget>[
             StreamBuilder(
                 stream: widget.searchBLoC.searchText,
-                initialData: "",
                 builder: (context, snapshot) =>
                     Flexible(
                       child: TextField(
@@ -60,9 +59,14 @@ class _SearchScreenState extends State<SearchScreen> {
                         controller: _textController,
                         onSubmitted: _handleSubmitted,
                         decoration: InputDecoration(
-                          labelText: 'Send a message',
+                          labelText: snapshot.error != null && !snapshot.hasData
+                              ? snapshot.error
+                              : "Type something...",
+                          labelStyle: TextStyle(
+                              color: snapshot.error != null && !snapshot.hasData
+                                  ? const Color(0xbfee3c48)
+                                  : const Color(0xffaaaaaa)),
                           border: OutlineInputBorder(),
-                          errorText: snapshot.error,
                         ),
                       ),
                     )),
@@ -150,9 +154,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void _handleSubmitted(String query) {
     widget.searchBLoC.searchAction.add(query);
-    if (query.length > 0) {
-      _textController.clear();
-    }
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 }
