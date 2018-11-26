@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:github_user_search_flutter/api/user_search_repo.dart';
 import 'package:github_user_search_flutter/models/user.dart';
@@ -28,6 +29,11 @@ class SearchBLoC {
 
   Sink<String> get searchAction => _searchActionController.sink;
 
+  ///Error Object Stream Object
+  final _errorResponseSubject = BehaviorSubject<UserSearchError>();
+
+  Stream<UserSearchError> get errorResponse => _errorResponseSubject.stream;
+
   ///BLoC Constructor
   SearchBLoC() {
     _searchActionController.stream.listen((searchString) {
@@ -41,11 +47,20 @@ class SearchBLoC {
   }
 
   ///API Call to fetch Users List
-  _getUsersListAndUpdate(String searchString) async {
+  _getUsersListAndUpdate(String searchString) {
     _searchStateSubject.add(1);
-    _usersListSubject.add(UnmodifiableListView(
-        await UserSearchRepo(client: http.Client()).getUsers(searchString)));
-    _searchStateSubject.add(2);
+
+    UserSearchRepo(
+      client: http.Client(),
+      onSuccess: (response) {
+        _usersListSubject.add(UnmodifiableListView(response));
+        _searchStateSubject.add(2);
+      },
+      onError: (userSearchError) {
+        _errorResponseSubject.add(userSearchError);
+        _searchStateSubject.add(3);
+      },
+    ).getUsers(searchString);
   }
 
   ///Dispose all streams
@@ -53,5 +68,43 @@ class SearchBLoC {
     _searchActionController.close();
     _searchQuerySubject.close();
     _usersListSubject.close();
+  }
+}
+
+class UserSearchError extends Error {
+  final Exception exception;
+  final int statusCode;
+  String message;
+
+  UserSearchError(this.exception, this.statusCode) {
+    switch (exception.runtimeType) {
+      case TimeoutException:
+        message = "Request time out";
+        break;
+      case SocketException:
+        message = "No Internet connection";
+        break;
+      case HttpException:
+        message = "Something went wrong";
+        break;
+    }
+  }
+
+  @override
+  Type get runtimeType {
+    return exception.runtimeType;
+  }
+
+  @override
+  String toString() {
+    return exception.toString();
+  }
+
+  String getMessage() {
+    return message;
+  }
+
+  int getStatusCode() {
+    return statusCode;
   }
 }

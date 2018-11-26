@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                     const Text(
-                        'and search for any user on Github using thier login name'),
+                        'and search for any user on Github using their login name'),
                   ],
                 ),
               ],

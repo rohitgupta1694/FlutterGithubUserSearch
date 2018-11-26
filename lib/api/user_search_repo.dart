@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:github_user_search_flutter/api/response_models/response.dart';
 import 'package:github_user_search_flutter/api/response_models/response_serializers.dart';
+import 'package:github_user_search_flutter/bloc/search_bloc.dart';
 import 'package:github_user_search_flutter/models/user.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,27 +18,34 @@ class UserSearchRepo {
 
   final http.Client client;
 
-  UserSearchRepo({this.client});
+  final ValueChanged<UserSearchError> onError;
 
-  Future<List<User>> getUsers(String query) async {
-    String finalUrl = '$_baseUrl?q=$query&per_page=20';
+  final ValueChanged<List<User>> onSuccess;
 
-    final response =
-    await client.get(Uri.parse(finalUrl), headers: _githubTextMatchHeader);
-    if (response.statusCode != HttpStatus.ok) {
-      throw UserSearchAPIError("Users could not be fetched.");
+  UserSearchRepo({this.client, this.onSuccess, this.onError});
+
+  void getUsers(String query) async {
+    try {
+      await client
+          .get(Uri.parse('$_baseUrl?q=$query&per_page=20'),
+          headers: _githubTextMatchHeader)
+          .then((response) {
+        if (response.statusCode == HttpStatus.ok) {
+          onSuccess(serializers
+              .deserializeWith(Response.serializer, json.decode(response.body))
+              .items
+              .map((item) => User.fromResponse(item))
+              .toList());
+        }
+      }).timeout(
+        Duration(seconds: 30),
+        onTimeout: () {
+          onError(UserSearchError(
+              TimeoutException("Request timeout"), HttpStatus.requestTimeout));
+        },
+      );
+    } catch (e) {
+      onError(UserSearchError(e, 0));
     }
-
-    return serializers
-        .deserializeWith(Response.serializer, json.decode(response.body))
-        .items
-        .map((item) => User.fromResponse(item))
-        .toList();
   }
-}
-
-class UserSearchAPIError extends Error {
-  final String message;
-
-  UserSearchAPIError(this.message);
 }

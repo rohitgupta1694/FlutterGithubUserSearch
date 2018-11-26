@@ -125,29 +125,56 @@ class _SearchScreenState extends State<SearchScreen> {
   getUsersResultWidget(int searchState) {
     switch (searchState) {
       case 0:
-        return Center(child: Text("Search not happening"));
+        return Center(
+          child: Text(
+            "Search not happening",
+            style: TextStyle(
+              color: const Color(0xff333333),
+              fontSize: 22.0,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        );
       case 1:
         return Center(
           child: SizedBox(
             width: 32.0,
             height: 32.0,
-            child: CircularProgressIndicator(
-              backgroundColor: const Color(0xffee3c48),
-            ),
+            child: CircularProgressIndicator(),
           ),
         );
       case 2:
         return StreamBuilder<UnmodifiableListView<User>>(
           stream: widget.searchBLoC.usersList,
           builder: (context, snapshot) =>
-          snapshot.hasData
-              ? Center(
-              child: Text(
-                  "Search complete, List count: ${snapshot.data.length}"))
-              : Center(
-              child: Text(
-                  "Search inComplete due to some error, Error: ${snapshot
-                      .error}")),
+              Center(
+                child: Text(
+                  snapshot.hasData
+                      ? "Search complete, List count: ${snapshot.data.length}"
+                      : "Search inComplete due to some error, Error: ${snapshot
+                      .error}",
+                  style: TextStyle(
+                    color: const Color(0xff333333),
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+        );
+      case 3:
+        return StreamBuilder(
+          stream: widget.searchBLoC.errorResponse,
+          builder: (context, snapshot) =>
+              Center(
+                child: Text(
+                  snapshot.hasData ? snapshot.data.getMessage() : "",
+                  style: TextStyle(
+                    color: const Color(0xff333333),
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
         );
     }
   }
