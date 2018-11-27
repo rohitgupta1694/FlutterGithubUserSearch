@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:github_user_search_flutter/custom_widgets/gradient_app_bar.dart';
 import 'package:github_user_search_flutter/ui/search_screen.dart';
 import 'package:github_user_search_flutter/utils/search_bloc_provider.dart';
@@ -18,7 +17,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
     void _handleSearchButtonClick(bool clickStatus) {
 //      widget.scaffoldKey.currentState
@@ -39,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: "Github User Search",
             needBackButton: false,
             needSearchAction: false,
-            onClick: _handleSearchButtonClick,
+            onTrailingIconClick: _handleSearchButtonClick,
           ),
           Expanded(
               child: Center(
@@ -76,7 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           _handleSearchButtonClick(true);
         },
-        tooltip: 'Search',
         child: new Icon(Icons.search),
         backgroundColor: const Color(0xffee3c48),
       ),

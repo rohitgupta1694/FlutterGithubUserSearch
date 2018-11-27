@@ -20,6 +20,10 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _textController = TextEditingController();
 
+  void _handleBackButtonClick(bool clickStatus) {
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
@@ -31,6 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
             title: "Search",
             needBackButton: true,
             needSearchAction: false,
+            onLeadingIconClick: _handleBackButtonClick,
           ),
           Expanded(
               child: Column(
