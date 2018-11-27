@@ -16,7 +16,7 @@ class GradientAppBar extends StatelessWidget {
 
   final String title;
   final bool needBackButton, needSearchAction;
-  ValueChanged<bool> onLeadingIconClick, onTrailingIconClick;
+  final ValueChanged<bool> onLeadingIconClick, onTrailingIconClick;
 
   void _onTrailingIconClick() => onTrailingIconClick(true);
 
