@@ -1,6 +1,6 @@
-# github_user_search_flutter
+# Github User Search Flutter Application
 
-A new Flutter application for searching Github&#x27;s users.
+A Flutter application for searching Github&#x27;s users.
 
 ## Getting Started
 
