@@ -17,7 +17,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-
     void _handleSearchButtonClick(bool clickStatus) {
 //      widget.scaffoldKey.currentState
 //          .showSnackBar(SnackBarUtil.showNormalSnackBar("Search something"));
@@ -40,34 +39,28 @@ class _MyHomePageState extends State<MyHomePage> {
             onTrailingIconClick: _handleSearchButtonClick,
           ),
           Expanded(
-              child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Column(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
-                        Text('Press the '),
-                        Tooltip(
-                          message: 'search',
-                          child: Icon(
-                            Icons.search,
-                            size: 18.0,
-                          ),
-                        ),
-                        Text(' icon in the bottom right corner'),
-                      ],
+                  children: const <Widget>[
+                    Text('Press the '),
+                    Tooltip(
+                      message: 'search',
+                      child: Icon(
+                        Icons.search,
+                        size: 18.0,
+                      ),
                     ),
-                    const Text(
-                        'and search for any user on Github using their login name'),
+                    Text(' icon in the bottom right corner'),
                   ],
                 ),
+                const Text(
+                    'and search for any user on Github using their login name'),
               ],
             ),
-          )),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
