@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:github_user_search_flutter/bloc/search_bloc.dart';
-import 'package:github_user_search_flutter/custom_widgets/gradient_app_bar.dart';
 import 'package:github_user_search_flutter/models/user.dart';
+import 'package:gradient_toolbar/gradient_toolbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -31,10 +31,10 @@ class _SearchScreenState extends State<SearchScreen> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
-          new GradientAppBar(
+          new GradientToolBar(
             title: "Search",
-            needBackButton: true,
-            needSearchAction: false,
+            needLeadingButton: true,
+            needTrailingButton: false,
             onLeadingIconClick: _handleBackButtonClick,
           ),
           Expanded(

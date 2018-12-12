@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
     return SearchBLoCProvider(
       child: MaterialApp(
         title: 'Github User Search',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: const Color(0xffee3c48),
           accentColor: const Color(0xffee3c55),

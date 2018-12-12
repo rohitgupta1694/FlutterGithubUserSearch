@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:github_user_search_flutter/custom_widgets/gradient_app_bar.dart';
 import 'package:github_user_search_flutter/ui/search_screen.dart';
 import 'package:github_user_search_flutter/utils/search_bloc_provider.dart';
+import 'package:gradient_toolbar/gradient_toolbar.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.scaffoldKey}) : super(key: key);
@@ -32,11 +32,10 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
-          new GradientAppBar(
+          GradientToolBar(
             title: "Github User Search",
-            needBackButton: false,
-            needSearchAction: false,
-            onTrailingIconClick: _handleSearchButtonClick,
+            needLeadingButton: false,
+            needTrailingButton: false,
           ),
           Expanded(
             child: Column(
